@@ -1,0 +1,31 @@
+From 6386f88a032eb7d16aa573833cbc460f3cc26356 Mon Sep 17 00:00:00 2001
+From: Ningxin Hu <ningxin@intel.com>
+Date: Wed, 31 Aug 2016 14:20:21 +0000
+Subject: [PATCH 2/3] [ostro-os-xt] Fork without dropping capabilities if no
+ sandboxing
+
+if no setuid and namespace sandboxing, fork without dropping capabilities.
+Otherwise, renderer process gets SIGKILL on Ostro OS XT.
+---
+ content/zygote/zygote_linux.cc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/content/zygote/zygote_linux.cc b/content/zygote/zygote_linux.cc
+index cab4722..c7572d4 100644
+--- a/content/zygote/zygote_linux.cc
++++ b/content/zygote/zygote_linux.cc
+@@ -450,7 +450,10 @@ int Zygote::ForkWithRealPid(const std::string& process_type,
+       pid = sandbox::NamespaceSandbox::ForkInNewPidNamespace(
+           /*drop_capabilities_in_child=*/true);
+     } else {
+-      pid = sandbox::Credentials::ForkAndDropCapabilitiesInChild();
++      // if no setuid and namespace sandboxing, fork without
++      // dropping capabilities. Otherwise, renderer process
++      // gets SIGKILL on Ostro OS XT.
++      pid = fork();
+     }
+   }
+ 
+-- 
+2.8.4
+
