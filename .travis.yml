@@ -1,5 +1,11 @@
 language: python
 sudo: required
+addons:
+  apt:
+    packages:
+    - diffstat
+    - makeinfo
+    - chrpath
 script:
   - python --version
   - python3 --version
