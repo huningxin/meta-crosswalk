@@ -2,4 +2,9 @@ language: c++
 compiler: gcc
 
 script:
-  - git clone https://github.com/ostroproject/ostro-os-xt.git huningxin/ostro-os-xt
+  - export WORKSPACE=$PWD/huningxin/ostro-os-xt
+  - mkdir -p $WORKSPACE
+  - cd $WORKSPACE
+  - git clone --recursive https://github.com/ostroproject/ostro-os-xt .
+  - source ostro-init-build-env
+  - bitbake ostro-xt-image-noswupd
