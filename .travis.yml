@@ -1,0 +1,5 @@
+language: c++
+compiler: gcc
+
+script:
+  - git clone https://github.com/ostroproject/ostro-os-xt.git huningxin/ostro-os-xt
