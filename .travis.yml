@@ -3,9 +3,10 @@ compiler: gcc
 sudo: required
 before_install:
 - sudo apt-get update
+install:
 - sudo apt-get install python3
-
 script:
+  - python3 --version
   - export WORKSPACE=$PWD/huningxin/ostro-os-xt
   - mkdir -p $WORKSPACE
   - cd $WORKSPACE
