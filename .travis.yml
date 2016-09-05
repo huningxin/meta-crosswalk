@@ -1,5 +1,9 @@
 language: c++
 compiler: gcc
+sudo: required
+before_install:
+- sudo apt-get update
+- sudo apt-get install python3
 
 script:
   - export WORKSPACE=$PWD/huningxin/ostro-os-xt
