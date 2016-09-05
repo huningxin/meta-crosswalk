@@ -8,4 +8,6 @@ script:
   - cd $WORKSPACE
   - git clone --recursive https://github.com/ostroproject/ostro-os-xt .
   - source ostro-init-build-env
+  - cat $WORKSPACE/meta-ostro-xt/conf/distro/include/ostroproject-ci.inc > conf/auto.conf
+  - echo "MACHINE = \"intel-corei7-64\"" >> conf/auto.conf
   - bitbake ostro-xt-image-noswupd
