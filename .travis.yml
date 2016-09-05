@@ -3,9 +3,9 @@ sudo: required
 addons:
   apt:
     packages:
-    - diffstat
-    - makeinfo
     - chrpath
+    - diffstat
+    - texinfo
 script:
   - python --version
   - python3 --version
