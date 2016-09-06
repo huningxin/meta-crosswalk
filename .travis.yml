@@ -1,19 +1,31 @@
 language: python
-sudo: required
 addons:
   apt:
     packages:
     - chrpath
     - diffstat
     - texinfo
+cache:
+  directories:
+  - $HOME/ostro-os-xt/build/downloads
+  - $HOME/ostro-os-xt/build/sstate-cache
 script:
+  - echo $HOME
+  - df -h .
   - python --version
   - python3 --version
-  - export WORKSPACE=$PWD/huningxin/ostro-os-xt
+  - export WORKSPACE=$HOME/ostro-os-xt
   - mkdir -p $WORKSPACE
   - cd $WORKSPACE
   - git clone --recursive https://github.com/ostroproject/ostro-os-xt .
   - source ostro-init-build-env
   - cat $WORKSPACE/meta-ostro-xt/conf/distro/include/ostroproject-ci.inc > conf/auto.conf
   - echo "MACHINE = \"intel-corei7-64\"" >> conf/auto.conf
-  - bitbake ostro-xt-image-noswupd
+  - start=$(date +%s)
+  - duration=50
+  - deadline=$(( $start + $duration * 60 - 10 * 60 ))
+  - echo "Started on $(date --date=@$start), must end at $(date --date=@$deadline)."
+  - ../scripts/travis-cmd-wrapper.py --deadline=$deadline bitbake ostro-xt-image-noswupd
+  - df -h .
+  - du -u -h sstate-cache
+  - du -u -h downloads
