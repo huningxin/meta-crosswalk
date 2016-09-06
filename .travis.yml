@@ -7,15 +7,16 @@ addons:
     - texinfo
 cache:
   directories:
-  - $HOME/ostro-os-xt/build/downloads
-  - $HOME/ostro-os-xt/build/sstate-cache
+  - /home/travis/build/huningxin/ostro-os-xt/build/downloads
+  - /home/travis/build/huningxin/ostro-os-xt/build/sstate-cache
 script:
-  - echo $HOME
+  - echo $PWD
   - df -h .
   - python --version
   - python3 --version
-  - export WORKSPACE=$HOME/ostro-os-xt
+  - export WORKSPACE=$PWD/../ostro-os-xt
   - mkdir -p $WORKSPACE
+  - echo $WORKSPACE
   - cd $WORKSPACE
   - git clone --recursive https://github.com/ostroproject/ostro-os-xt .
   - source ostro-init-build-env
